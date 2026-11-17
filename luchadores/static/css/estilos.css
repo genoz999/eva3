@@ -1,0 +1,120 @@
+:root {
+    --wwe-dark: #0f1115;
+    --wwe-card: #181b22;
+    --wwe-red: #e50914;
+    --wwe-gold: #f5c518;
+    --wwe-border: #2a2f3a;
+}
+
+body {
+    background: radial-gradient(circle at top, #1d222d 0%, var(--wwe-dark) 100%);
+    color: #e9ecef;
+    min-height: 100vh;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.navbar-wwe {
+    background-color: #090a0d !important;
+    border-bottom: 3px solid var(--wwe-red);
+    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.25);
+}
+
+.navbar-brand {
+    letter-spacing: 1.5px;
+}
+
+.brand-accent {
+    color: var(--wwe-red);
+}
+
+.card-wwe {
+    background-color: var(--wwe-card);
+    border: 1px solid var(--wwe-border);
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+    color: #e9ecef;
+}
+
+.table-wwe {
+    color: #f8f9fa !important;
+    --bs-table-color: #f8f9fa;
+    --bs-table-bg: transparent;
+    --bs-table-striped-color: #f8f9fa;
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.03);
+    --bs-table-hover-color: #ffffff;
+    --bs-table-hover-bg: rgba(229, 9, 20, 0.15);
+    border-color: var(--wwe-border);
+}
+
+.table-wwe th,
+.table-wwe td {
+    color: #f8f9fa !important;
+}
+
+.table-wwe thead {
+    background-color: #090a0d;
+    border-bottom: 2px solid var(--wwe-red);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.8px;
+}
+
+.badge-champion {
+    background: linear-gradient(135deg, #f5c518 0%, #d4af37 100%);
+    color: #000;
+    font-weight: 700;
+    box-shadow: 0 0 10px rgba(245, 197, 24, 0.4);
+}
+
+/* Ajuste para inputs y formularios en modo oscuro */
+.form-control, .form-select {
+    background-color: #101318;
+    border: 1px solid var(--wwe-border);
+    color: #fff;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: #101318;
+    color: #fff;
+    border-color: var(--wwe-red);
+    box-shadow: 0 0 0 0.25rem rgba(229, 9, 20, 0.25);
+}
+
+.list-group-item {
+    background-color: transparent;
+    color: #e9ecef;
+    border-color: var(--wwe-border);
+}
+
+/* Colores personalizados por Marca WWE */
+.badge-marca-raw {
+    background-color: #e50914;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.badge-marca-smackdown {
+    background-color: #0d6efd;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.badge-marca-nxt {
+    background-color: #ffc107;
+    color: #000000;
+    font-weight: 700;
+}
+
+.badge-marca-hall-of-fame {
+    background: linear-gradient(135deg, #f5c518 0%, #b8860b 100%);
+    color: #000000;
+    font-weight: 800;
+    border: 1px solid #ffe066;
+    box-shadow: 0 0 8px rgba(245, 197, 24, 0.5);
+}
+
+/* Color por defecto si agregas otra marca distinta */
+.badge-marca-default {
+    background-color: #6c757d;
+    color: #ffffff;
+}

@@ -1,0 +1,42 @@
+{% extends 'luchadores/base.html' %}
+
+{% block title %}Detalle - {{ luchador.nombre_ring }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card card-wwe">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Ficha de Superestrella</h4>
+                <span class="badge bg-primary fs-6">{{ luchador.marca }}</span>
+            </div>
+            <div class="card-body">
+                <h3 class="card-title fw-bold mb-3">{{ luchador.nombre_ring }}</h3>
+                <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item"><strong>ID Registro:</strong> #{{ luchador.id }}</li>
+                    <li class="list-group-item"><strong>Marca Asignada:</strong> {{ luchador.marca }}</li>
+                    <li class="list-group-item"><strong>Peso Oficial:</strong> {{ luchador.peso_kg }} kg</li>
+                    <li class="list-group-item"><strong>Fecha de Debut:</strong> {{ luchador.fecha_debut }}</li>
+                    <li class="list-group-item">
+                        <strong>Estado Titular:</strong>
+                        {% if luchador.es_campeon %}
+                            <span class="badge bg-warning text-dark">Campeón Vigente</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Sin Título</span>
+                        {% endif %}
+                    </li>
+                </ul>
+                <div class="d-flex justify-content-between">
+                    <a href="{% url 'luchador_list' %}" class="btn btn-secondary">Volver al Roster</a>
+                    {% if user.is_authenticated %}
+                        <div>
+                            <a href="{% url 'luchador_update' luchador.pk %}" class="btn btn-warning">Editar</a>
+                            <a href="{% url 'luchador_delete' luchador.pk %}" class="btn btn-danger">Eliminar</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}  

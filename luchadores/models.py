@@ -1,6 +1,5 @@
 from django.db import models
 
-# Create your models here.
 class Marca(models.Model):
     nombre = models.CharField(max_length=50, unique=True, verbose_name="Nombre de la marca")
     descripcion = models.TextField(blank=True, null=True, verbose_name="Descripcion")

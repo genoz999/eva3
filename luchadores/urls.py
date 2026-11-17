@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (
     LuchadorListView,
+    LuchadorDetailView,
     LuchadorCreateView,
     LuchadorUpdateView,
     LuchadorDeleteView,
@@ -8,6 +9,7 @@ from .views import (
 
 urlpatterns = [
     path('', LuchadorListView.as_view(), name='luchador_list'),
+    path('detalle/<int:pk>/', LuchadorDetailView.as_view(), name='luchador_detail'),
     path('nuevo/', LuchadorCreateView.as_view(), name='luchador_create'),
     path('editar/<int:pk>/', LuchadorUpdateView.as_view(), name='luchador_update'),
     path('eliminar/<int:pk>/', LuchadorDeleteView.as_view(), name='luchador_delete'),
