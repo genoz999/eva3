@@ -1,0 +1,23 @@
+{% extends 'luchadores/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-danger shadow-sm">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">Confirmar Eliminación</h4>
+            </div>
+            <div class="card-body">
+                <p class="fs-5">¿Estás seguro de que deseas eliminar del roster a <strong>{{ object.nombre_ring }}</strong> ({{ object.marca.nombre }})?</p>
+                <p class="text-muted small">Esta acción eliminará el registro directamente de la base de datos MySQL.</p>
+                
+                <form method="post" class="mt-4 d-flex justify-content-between">
+                    {% csrf_token %}
+                    <a href="{% url 'luchador_list' %}" class="btn btn-secondary">Cancelar</a>
+                    <button type="submit" class="btn btn-danger">Sí, Eliminar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

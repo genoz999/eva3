@@ -1,0 +1,50 @@
+{% extends 'luchadores/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">
+                    {% if object %}Editar Luchador{% else %}Registrar Nuevo Luchador{% endif %}
+                </h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Marca</label>
+                        {{ form.marca }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Nombre en el Ring</label>
+                        {{ form.nombre_ring }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Peso (kg)</label>
+                        {{ form.peso_kg }}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Fecha de Debut</label>
+                        {{ form.fecha_debut }}
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        {{ form.es_campeon }}
+                        <label class="form-check-label fw-semibold">¿Es Campeón Actual?</label>
+                    </div>
+
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'luchador_list' %}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-success">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
