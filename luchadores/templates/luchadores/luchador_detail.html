@@ -1,42 +1,77 @@
 {% extends 'luchadores/base.html' %}
 
-{% block title %}Detalle - {{ luchador.nombre_ring }}{% endblock %}
+{% block title %}{{ luchador.nombre_ring }} - Detalle WWE{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card card-wwe">
-            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">Ficha de Superestrella</h4>
-                <span class="badge bg-primary fs-6">{{ luchador.marca }}</span>
+    <div class="col-md-8">
+        <div class="card card-wwe shadow-lg">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0 fw-bold text-white">{{ luchador.nombre_ring }}</h3>
+                {% if luchador.es_campeon %}
+                    <span class="badge badge-champion fs-6">★ Campeón Actual</span>
+                {% endif %}
             </div>
             <div class="card-body">
-                <h3 class="card-title fw-bold mb-3">{{ luchador.nombre_ring }}</h3>
-                <ul class="list-group list-group-flush mb-3">
-                    <li class="list-group-item"><strong>ID Registro:</strong> #{{ luchador.id }}</li>
-                    <li class="list-group-item"><strong>Marca Asignada:</strong> {{ luchador.marca }}</li>
-                    <li class="list-group-item"><strong>Peso Oficial:</strong> {{ luchador.peso_kg }} kg</li>
-                    <li class="list-group-item"><strong>Fecha de Debut:</strong> {{ luchador.fecha_debut }}</li>
-                    <li class="list-group-item">
-                        <strong>Estado Titular:</strong>
-                        {% if luchador.es_campeon %}
-                            <span class="badge bg-warning text-dark">Campeón Vigente</span>
+                <div class="row align-items-center g-4">
+                    <!-- Columna de la Foto -->
+                    <div class="col-md-5 text-center">
+                        {% if luchador.foto_url %}
+                            <img src="{{ luchador.foto_url }}" alt="{{ luchador.nombre_ring }}" 
+                                 class="img-fluid rounded border border-secondary shadow" 
+                                 style="max-height: 320px; object-fit: cover;">
                         {% else %}
-                            <span class="badge bg-secondary">Sin Título</span>
+                            <div class="bg-dark border border-secondary rounded d-flex flex-column justify-content-center align-items-center text-secondary" 
+                                 style="height: 280px;">
+                                <span class="fs-1">🤼</span>
+                                <small class="mt-2">Sin imagen asignada</small>
+                            </div>
                         {% endif %}
-                    </li>
-                </ul>
-                <div class="d-flex justify-content-between">
-                    <a href="{% url 'luchador_list' %}" class="btn btn-secondary">Volver al Roster</a>
-                    {% if user.is_authenticated %}
-                        <div>
-                            <a href="{% url 'luchador_update' luchador.pk %}" class="btn btn-warning">Editar</a>
-                            <a href="{% url 'luchador_delete' luchador.pk %}" class="btn btn-danger">Eliminar</a>
-                        </div>
-                    {% endif %}
+                    </div>
+
+                    <!-- Columna de Datos -->
+                    <div class="col-md-7">
+                        <ul class="list-group list-group-flush rounded">
+                            <li class="list-group-item bg-transparent text-white border-secondary d-flex justify-content-between">
+                                <span class="text-secondary">Marca:</span>
+                                {% if luchador.marca.nombre|lower == 'raw' %}
+                                    <span class="badge badge-marca-raw">{{ luchador.marca }}</span>
+                                {% elif luchador.marca.nombre|lower == 'smackdown' %}
+                                    <span class="badge badge-marca-smackdown">{{ luchador.marca }}</span>
+                                {% elif luchador.marca.nombre|lower == 'nxt' %}
+                                    <span class="badge badge-marca-nxt">{{ luchador.marca }}</span>
+                                {% elif luchador.marca.nombre|lower == 'hall of fame' %}
+                                    <span class="badge badge-marca-hall-of-fame">{{ luchador.marca }}</span>
+                                {% else %}
+                                    <span class="badge badge-marca-default">{{ luchador.marca }}</span>
+                                {% endif %}
+                            </li>
+                            <li class="list-group-item bg-transparent text-white border-secondary d-flex justify-content-between">
+                                <span class="text-secondary">Peso:</span>
+                                <strong>{{ luchador.peso_kg }} kg</strong>
+                            </li>
+                            <li class="list-group-item bg-transparent text-white border-secondary d-flex justify-content-between">
+                                <span class="text-secondary">Fecha de Debut:</span>
+                                <strong>{{ luchador.fecha_debut }}</strong>
+                            </li>
+                            <li class="list-group-item bg-transparent text-white border-secondary d-flex justify-content-between">
+                                <span class="text-secondary">Estado Titular:</span>
+                                <strong>{% if luchador.es_campeon %}Campeón{% else %}Sin Título{% endif %}</strong>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="{% url 'luchador_list' %}" class="btn btn-outline-light">← Volver al Roster</a>
+                {% if user.is_authenticated %}
+                    <div>
+                        <a href="{% url 'luchador_update' luchador.pk %}" class="btn btn-warning fw-semibold">Editar</a>
+                        <a href="{% url 'luchador_delete' luchador.pk %}" class="btn btn-danger fw-semibold">Eliminar</a>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
-{% endblock %}  
+{% endblock %}

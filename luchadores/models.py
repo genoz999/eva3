@@ -16,6 +16,7 @@ class Luchador(models.Model):
     peso_kg = models.DecimalField(max_digits=5, decimal_places=2, verbose_name="Peso (kg)")
     fecha_debut = models.DateField(verbose_name="Fecha de Debut")
     es_campeon = models.BooleanField(default=False, verbose_name="¿Es Canpeón Actual?")
+    foto_url = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL de la Foto")
 
     def __str__(self):
         return f"{self.nombre_ring} ({self.marca.nombre})"
@@ -23,3 +24,5 @@ class Luchador(models.Model):
     class Meta:
         verbose_name = "Luchador"
         verbose_name_plural = "Luchadores"
+
+foto_url = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL de la Foto")
