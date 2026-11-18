@@ -3,7 +3,8 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-from .models import Luchador
+from django.db.models import Count
+from .models import Luchador, Marca
 from .forms import LuchadorForm, CampeonatoFormSet
 
 
@@ -14,11 +15,14 @@ class LuchadorListView(ListView):
 
     def get_queryset(self):
         queryset = Luchador.objects.select_related('marca').order_by('nombre_ring')
-        marca = self.request.GET.get('marca')
-        busqueda = self.request.GET.get('q')
+        marca = self.request.GET.get('marca', '').strip()
+        busqueda = self.request.GET.get('q', '').strip()
 
         if marca:
-            queryset = queryset.filter(marca__nombre__iexact=marca)
+            if marca.isdigit():
+                queryset = queryset.filter(marca_id=marca)
+            else:
+                queryset = queryset.filter(marca__nombre__iexact=marca)
         if busqueda:
             queryset = queryset.filter(nombre_ring__icontains=busqueda)
 
@@ -26,8 +30,11 @@ class LuchadorListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['marca_actual'] = self.request.GET.get('marca', '')
-        context['busqueda_actual'] = self.request.GET.get('q', '')
+        context['total_luchadores'] = Luchador.objects.count()
+        context['total_campeones'] = Luchador.objects.filter(es_campeon=True).count()
+        context['marcas'] = Marca.objects.annotate(total=Count('luchadores'))
+        context['q'] = self.request.GET.get('q', '').strip()
+        context['marca_seleccionada'] = self.request.GET.get('marca', '').strip()
         return context
 
 

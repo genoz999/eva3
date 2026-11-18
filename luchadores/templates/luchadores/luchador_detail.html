@@ -74,6 +74,7 @@
                                 <tr>
                                     <th>Campeonato</th>
                                     <th class="text-center">Reinados</th>
+                                    <th class="text-center">Días</th>
                                     <th>Fecha Ganado</th>
                                     <th class="text-end">Estado</th>
                                 </tr>
@@ -85,6 +86,7 @@
                                     <td class="text-center">
                                         <span class="badge bg-dark border border-warning text-warning">{{ titulo.reinados }}x</span>
                                     </td>
+                                    <td class="text-center">{{ titulo.dias_reinado }} días</td>
                                     <td>{{ titulo.fecha_ganado }}</td>
                                     <td class="text-end">
                                         {% if titulo.es_actual %}
