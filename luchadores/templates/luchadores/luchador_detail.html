@@ -61,7 +61,48 @@
                         </ul>
                     </div>
                 </div>
+
+                <hr class="border-secondary my-4">
+
+                <!-- Historial de Campeonatos (solo lectura en Ver) -->
+                <h5 class="fw-bold text-warning mb-3">🏆 Historial de Campeonatos</h5>
+
+                {% if luchador.campeonatos.all %}
+                    <div class="table-responsive">
+                        <table class="table table-wwe table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Campeonato</th>
+                                    <th class="text-center">Reinados</th>
+                                    <th>Fecha Ganado</th>
+                                    <th class="text-end">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for titulo in luchador.campeonatos.all %}
+                                <tr>
+                                    <td class="fw-semibold">{{ titulo.titulo }}</td>
+                                    <td class="text-center">
+                                        <span class="badge bg-dark border border-warning text-warning">{{ titulo.reinados }}x</span>
+                                    </td>
+                                    <td>{{ titulo.fecha_ganado }}</td>
+                                    <td class="text-end">
+                                        {% if titulo.es_actual %}
+                                            <span class="badge badge-champion">Actual</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">Histórico</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-secondary small mb-0">Este luchador aún no tiene campeonatos registrados en su historial.</p>
+                {% endif %}
             </div>
+
             <div class="card-footer d-flex justify-content-between">
                 <a href="{% url 'luchador_list' %}" class="btn btn-outline-light">← Volver al Roster</a>
                 {% if user.is_authenticated %}

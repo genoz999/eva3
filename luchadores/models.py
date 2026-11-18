@@ -26,3 +26,26 @@ class Luchador(models.Model):
         verbose_name_plural = "Luchadores"
 
 foto_url = models.URLField(max_length=500, blank=True, null=True, verbose_name="URL de la Foto")
+
+class Campeonato(models.Model):
+    luchador = models.ForeignKey(Luchador, on_delete=models.CASCADE, related_name='campeonatos')
+    titulo = models.CharField(max_length=120, verbose_name="Nombre del Título")
+    fecha_ganado = models.DateField(verbose_name="Fecha en que lo ganó")
+    reinados = models.PositiveIntegerField(default=1, verbose_name="N° de Reinados")
+    es_actual = models.BooleanField(default=False, verbose_name="¿Lo posee actualmente?")
+
+    class Meta:
+        ordering = ['-es_actual', '-fecha_ganado']
+        verbose_name = "Campeonato"
+        verbose_name_plural = "Campeonatos"
+
+    def __str__(self):
+        return f"{self.titulo} ({self.luchador.nombre_ring})"
+
+    class Meta:
+        ordering = ['-es_actual', '-fecha_ganado']
+        verbose_name = "Campeonato"
+        verbose_name_plural = "Campeonatos"
+
+    def __str__(self):
+        return f"{self.titulo} ({self.luchador.nombre_ring})"

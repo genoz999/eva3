@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-6">
+    <div class="col-md-9">
         <div class="card card-wwe shadow-lg">
             <div class="card-header">
                 <h3 class="mb-0 fw-bold text-white">
@@ -19,54 +19,103 @@
                         <div class="alert alert-danger">{{ form.non_field_errors }}</div>
                     {% endif %}
 
-                    <div class="mb-3">
-                        <label for="{{ form.marca.id_for_label }}" class="form-label text-white">Marca</label>
-                        {{ form.marca }}
-                        {% if form.marca.errors %}
-                            <div class="text-danger small mt-1">{{ form.marca.errors }}</div>
-                        {% endif %}
+                    {% if campeonatos_formset.non_form_errors %}
+                        <div class="alert alert-danger">{{ campeonatos_formset.non_form_errors }}</div>
+                    {% endif %}
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="{{ form.marca.id_for_label }}" class="form-label text-white">Marca</label>
+                            {{ form.marca }}
+                            {% if form.marca.errors %}<div class="text-danger small mt-1">{{ form.marca.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="{{ form.nombre_ring.id_for_label }}" class="form-label text-white">Nombre en el Ring</label>
+                            {{ form.nombre_ring }}
+                            {% if form.nombre_ring.errors %}<div class="text-danger small mt-1">{{ form.nombre_ring.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="{{ form.peso_kg.id_for_label }}" class="form-label text-white">Peso (kg)</label>
+                            {{ form.peso_kg }}
+                            {% if form.peso_kg.errors %}<div class="text-danger small mt-1">{{ form.peso_kg.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="{{ form.fecha_debut.id_for_label }}" class="form-label text-white">Fecha de Debut</label>
+                            {{ form.fecha_debut }}
+                            {% if form.fecha_debut.errors %}<div class="text-danger small mt-1">{{ form.fecha_debut.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="col-12">
+                            <label for="{{ form.foto_url.id_for_label }}" class="form-label text-white">URL de la Foto</label>
+                            {{ form.foto_url }}
+                            {% if form.foto_url.errors %}<div class="text-danger small mt-1">{{ form.foto_url.errors }}</div>{% endif %}
+                        </div>
+
+                        <div class="col-12">
+                            <div class="form-check">
+                                {{ form.es_campeon }}
+                                <label class="form-check-label text-white" for="{{ form.es_campeon.id_for_label }}">
+                                    ¿Es Campeón Actual?
+                                </label>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="{{ form.nombre_ring.id_for_label }}" class="form-label text-white">Nombre en el Ring</label>
-                        {{ form.nombre_ring }}
-                        {% if form.nombre_ring.errors %}
-                            <div class="text-danger small mt-1">{{ form.nombre_ring.errors }}</div>
-                        {% endif %}
+                    <hr class="border-secondary my-4">
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h5 class="fw-bold text-warning mb-0">🏆 Historial de Campeonatos</h5>
+                        <button type="button" id="add-campeonato" class="btn btn-sm btn-outline-warning fw-semibold">
+                            + Añadir otro título
+                        </button>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="{{ form.peso_kg.id_for_label }}" class="form-label text-white">Peso (kg)</label>
-                        {{ form.peso_kg }}
-                        {% if form.peso_kg.errors %}
-                            <div class="text-danger small mt-1">{{ form.peso_kg.errors }}</div>
-                        {% endif %}
-                    </div>
+                    {{ campeonatos_formset.management_form }}
 
-                    <div class="mb-3">
-                        <label for="{{ form.fecha_debut.id_for_label }}" class="form-label text-white">Fecha de Debut</label>
-                        {{ form.fecha_debut }}
-                        {% if form.fecha_debut.errors %}
-                            <div class="text-danger small mt-1">{{ form.fecha_debut.errors }}</div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="{{ form.foto_url.id_for_label }}" class="form-label text-white">URL de la Foto</label>
-                        {{ form.foto_url }}
-                        {% if form.foto_url.errors %}
-                            <div class="text-danger small mt-1">{{ form.foto_url.errors }}</div>
-                        {% endif %}
-                    </div>
-
-                    <div class="mb-4 form-check">
-                        {{ form.es_campeon }}
-                        <label class="form-check-label text-white" for="{{ form.es_campeon.id_for_label }}">
-                            ¿Es Campeón Actual?
-                        </label>
-                        {% if form.es_campeon.errors %}
-                            <div class="text-danger small mt-1">{{ form.es_campeon.errors }}</div>
-                        {% endif %}
+                    <div class="table-responsive mb-4">
+                        <table class="table table-wwe table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th style="width: 110px;">Reinados</th>
+                                    <th style="width: 165px;">Fecha Ganado</th>
+                                    <th class="text-center" style="width: 90px;">Actual</th>
+                                    <th class="text-center" style="width: 90px;">Eliminar</th>
+                                </tr>
+                            </thead>
+                            <tbody id="campeonatos-tbody">
+                                {% for subform in campeonatos_formset %}
+                                <tr class="campeonato-row">
+                                    <td>
+                                        {{ subform.id }}
+                                        {{ subform.titulo }}
+                                        {% if subform.titulo.errors %}<div class="text-danger small">{{ subform.titulo.errors }}</div>{% endif %}
+                                    </td>
+                                    <td>
+                                        {{ subform.reinados }}
+                                        {% if subform.reinados.errors %}<div class="text-danger small">{{ subform.reinados.errors }}</div>{% endif %}
+                                    </td>
+                                    <td>
+                                        {{ subform.fecha_ganado }}
+                                        {% if subform.fecha_ganado.errors %}<div class="text-danger small">{{ subform.fecha_ganado.errors }}</div>{% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        {{ subform.es_actual }}
+                                    </td>
+                                    <td class="text-center">
+                                        {% if subform.instance.pk %}
+                                            {{ subform.DELETE }}
+                                        {% else %}
+                                            <span class="text-secondary small">—</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="d-flex justify-content-between">
@@ -78,4 +127,39 @@
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addBtn = document.getElementById('add-campeonato');
+    const tbody = document.getElementById('campeonatos-tbody');
+    const totalForms = document.getElementById('id_campeonatos-TOTAL_FORMS');
+
+    if (addBtn && tbody && totalForms) {
+        addBtn.addEventListener('click', function() {
+            const currentCount = parseInt(totalForms.value);
+            const rows = tbody.querySelectorAll('.campeonato-row');
+            const lastRow = rows[rows.length - 1];
+            const newRow = lastRow.cloneNode(true);
+
+            const regex = new RegExp(`campeonatos-${currentCount - 1}-`, 'g');
+            newRow.innerHTML = newRow.innerHTML.replace(regex, `campeonatos-${currentCount}-`);
+
+            newRow.querySelectorAll('input').forEach(input => {
+                if (input.type === 'checkbox') {
+                    input.checked = false;
+                } else if (input.type === 'number') {
+                    input.value = '1';
+                } else {
+                    input.value = '';
+                }
+            });
+
+            newRow.querySelectorAll('.text-danger').forEach(err => err.remove());
+
+            tbody.appendChild(newRow);
+            totalForms.value = currentCount + 1;
+        });
+    }
+});
+</script>
 {% endblock %}

@@ -1,5 +1,7 @@
 from django import forms
-from .models import Luchador
+from django.forms import inlineformset_factory
+from .models import Luchador, Campeonato
+
 
 class LuchadorForm(forms.ModelForm):
     class Meta:
@@ -13,3 +15,18 @@ class LuchadorForm(forms.ModelForm):
             'es_campeon': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
             'foto_url': forms.URLInput(attrs={'class': 'form-control', 'placeholder': 'https://ejemplo.com/foto.jpg'}),
         }
+
+
+CampeonatoFormSet = inlineformset_factory(
+    Luchador,
+    Campeonato,
+    fields=['titulo', 'reinados', 'fecha_ganado', 'es_actual'],
+    extra=1,
+    can_delete=True,
+    widgets={
+        'titulo': forms.TextInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Ej: WWE Championship'}),
+        'reinados': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'min': 1}),
+        'fecha_ganado': forms.DateInput(attrs={'class': 'form-control form-control-sm', 'type': 'date'}),
+        'es_actual': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+    }
+)
