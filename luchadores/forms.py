@@ -20,12 +20,13 @@ class LuchadorForm(forms.ModelForm):
 CampeonatoFormSet = inlineformset_factory(
     Luchador,
     Campeonato,
-    fields=['titulo', 'reinados', 'fecha_ganado', 'es_actual'],
+    fields=['titulo', 'reinados', 'dias_reinado', 'fecha_ganado', 'es_actual'],
     extra=1,
     can_delete=True,
     widgets={
         'titulo': forms.TextInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Ej: WWE Championship'}),
         'reinados': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'min': 1}),
+        'dias_reinado': forms.NumberInput(attrs={'class': 'form-control form-control-sm', 'min': 0}),
         'fecha_ganado': forms.DateInput(attrs={'class': 'form-control form-control-sm', 'type': 'date'}),
         'es_actual': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
     }

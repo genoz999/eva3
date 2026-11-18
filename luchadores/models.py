@@ -32,6 +32,7 @@ class Campeonato(models.Model):
     titulo = models.CharField(max_length=120, verbose_name="Nombre del Título")
     fecha_ganado = models.DateField(verbose_name="Fecha en que lo ganó")
     reinados = models.PositiveIntegerField(default=1, verbose_name="N° de Reinados")
+    dias_reinado = models.PositiveIntegerField(default=0, verbose_name="Días de Reinado")
     es_actual = models.BooleanField(default=False, verbose_name="¿Lo posee actualmente?")
 
     class Meta:
